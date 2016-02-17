@@ -9,20 +9,20 @@ document.addEventListener("DOMContentLoaded", function (event) {
         if (keys[i].innerHTML === '=') {
             keys[i].addEventListener('click', calculate(i));
         } else {
-            keys[i].addEventListener('click', addValue(i));
+            keys[i].addEventListener('click', pressKey(i));
         }
     }
 
-    function addValue(i) {
+    function pressKey(i) {
 
         return function () {
 
             var keyPressed = keys[i].innerHTML;
+            var display = result.innerHTML;
 
-            if (result.innerHTML === '0' && keyPressed != '÷' && keyPressed != 'x' && keyPressed != '+' && keyPressed != '.') {
+            if (result.innerHTML === '0' && keyPressed != '÷' && keyPressed != 'x' && keyPressed != '-' && keyPressed != '+' && keyPressed != '.') {
                 result.innerHTML = '';
             }
-
 
             switch (keyPressed) {
 
@@ -30,28 +30,29 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 result.innerHTML = '0';
                 break;
             case '÷':
+                // check for two in a row
                 result.innerHTML += '/';
                 break;
             case 'x':
+                // check for two in a row
                 result.innerHTML += '*';
                 break;
             case '%':
-                //  if there is a /[^0-9]/ match in the string do this:
-                var a = result.innerHTML.split(/[^0-9]/, 1);
-                var b = result.innerHTML.split(/[^0-9]/, 2);
-                var c = result.innerHTML.match(/[^0-9]/);
-                var percent = b + '/100*' + a;
-                result.innerHTML = a + c + eval(percent);
-                //  else, do this:    
-                break;
-            case '.':
-                if (result.innerHTML.indexOf('.') > 0) {
-                    result.innerHTML.indexOf('.') === -1;
-                    break;
+                // if an operator was entered in a string
+                if (result.innerHTML.match(/[^0-9]/) != null) {
+                    var a = result.innerHTML.split(/[^0-9]/, 1);
+                    var b = result.innerHTML.split(/[^0-9]/, 2);
+                    var c = result.innerHTML.match(/[^0-9]/);
+                    var percent = b + '/100*' + a;
+                    result.innerHTML = a + c + eval(percent);
+                    result.innerHTML = result.innerHTML.slice(0, 9);
+                } else {
+                    result.innerHTML = result.innerHTML;
                 }
+                break;
             case '±':
-                // if result is positive - make it negative
-                var num = parseInt(result.innerHTML);
+                // if result is negative - make it positive and vice versa
+                var num = parseFloat(result.innerHTML);
                 if (num < 0) {
                     result.innerHTML = num * -1;
                 } else if (num > 0) {
@@ -59,12 +60,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 } else {
                     result.innerHTML = '0';
                 }
-                // if result is negative - make it positive
-                result.innerHTML = result.innerHTML.slice(0, 17);
+                result.innerHTML = result.innerHTML.slice(0, 9);
                 break;
+            case '.':
+                if (result.innerHTML.indexOf('.') > 0) {
+                    result.innerHTML.indexOf('.') === -1;
+                    break;
+                }
             default:
                 result.innerHTML += keyPressed;
-                result.innerHTML = result.innerHTML.slice(0, 17);
+                //                result.innerHTML = result.innerHTML.slice(0, 10);
             }
         };
     }

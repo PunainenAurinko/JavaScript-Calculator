@@ -31,11 +31,12 @@ html {
     line-height: 3rem;
     text-align: right;
     letter-spacing: 1px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 1px solid hsla(102, 94%, 86%, 0.3);
 }
 
 .result > p {
     margin-left: 0.6rem;
+    font-size: 5vw;
 }
 
 span {
@@ -48,8 +49,8 @@ span {
     text-align: center;
     /*    overflow: hidden;*/
     transition: background-color .3s ease;
-    border-right: 1px solid rgba(255, 255, 255, 0.3);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    border-right: 1px solid hsla(102, 94%, 86%, 0.3);
+    border-bottom: 1px solid hsla(102, 94%, 86%, 0.3);
 }
 
 span:hover {
@@ -63,7 +64,6 @@ span:hover {
 .sign {
     background: #fa6000;
     border-right: 0;
-    /*    color: rgba(0, 0, 0, 0.5);*/
 }
 
 .sign:hover {
