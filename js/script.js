@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", function (event) {
 
-    var keys = document.getElementsByTagName('span'),
+    var keys = document.querySelectorAll('span'),
         result = document.querySelector('.result p');
 
+    // display 0 when the calculator opens
     result.innerHTML = '0';
 
     for (var i = 0; i < keys.length; i += 1) {
@@ -39,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 break;
             case '%':
                 // if an operator was entered in a string
-                if (result.innerHTML.match(/[^0-9]/) != null) {
+                if (result.innerHTML.indexOf(result.innerHTML.match(/[^0-9]/)) >= 1) {
                     var a = result.innerHTML.split(/[^0-9]/, 1);
                     var b = result.innerHTML.split(/[^0-9]/, 2);
                     var c = result.innerHTML.match(/[^0-9]/);
@@ -60,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 } else {
                     result.innerHTML = '0';
                 }
-                result.innerHTML = result.innerHTML.slice(0, 9);
+                result.innerHTML = result.innerHTML.slice(0, 10);
                 break;
             case '.':
                 if (result.innerHTML.indexOf('.') > 0) {
@@ -69,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 }
             default:
                 result.innerHTML += keyPressed;
-                //                result.innerHTML = result.innerHTML.slice(0, 10);
+                result.innerHTML = result.innerHTML.slice(0, 9);
             }
         };
     }
@@ -77,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     function calculate(i) {
         return function () {
             result.innerHTML = eval(result.innerHTML);
-            result.innerHTML = result.innerHTML.slice(0, 17);
+            result.innerHTML = result.innerHTML.slice(0, 10);
         };
     }
 });
